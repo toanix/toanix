@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOANIX – Hệ sinh thái Toán THCS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --bg: #0a0e17;
+            --surface: #111827;
+            --border: #1f2d45;
+            --accent: #4f8ef7;
+            --accent2: #7ab3ff;
+            --text: #e2e8f0;
+            --muted: #94a3b8;
+            --radius: 18px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background grid */
+        .bg-grid {
+            position: fixed; inset: 0;
+            background-image:
+                linear-gradient(rgba(79, 142, 247, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(79, 142, 247, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+        }
+
+        /* Glow: centered on cursor, no offset needed */
+        .glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(79,142,247,0.13) 0%, rgba(79,142,247,0.04) 40%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: left 0.08s ease, top 0.08s ease;
+            /* default to center of screen */
+            left: 50%;
+            top: 50%;
+        }
+
+        /* Hero Section */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .badge {
+            padding: 6px 16px;
+            background: rgba(79, 142, 247, 0.1);
+            border: 1px solid rgba(79, 142, 247, 0.4);
+            border-radius: 99px;
+            color: var(--accent2);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+            animation: fadeDown 0.8s ease both;
+        }
+
+        h1 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: clamp(3rem, 10vw, 5.5rem);
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            animation: fadeDown 0.9s 0.1s ease both;
+            letter-spacing: -1px;
+        }
+
+        .hero-sub {
+            color: var(--muted);
+            max-width: 560px;
+            font-size: 1.1rem;
+            animation: fadeDown 1s 0.2s ease both;
+        }
+
+        .scroll-arrow {
+            margin-top: 48px;
+            font-size: 1.4rem;
+            color: var(--accent);
+            animation: bounce 2s infinite, fadeDown 1s 0.4s ease both;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+                        transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Features Section */
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .section-label {
+            text-align: center;
+            color: var(--accent2);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Libre Baskerville', serif;
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
+            color: #fff;
+            margin-bottom: 50px;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 36px 40px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(79, 142, 247, 0.4);
+            box-shadow: 0 0 30px rgba(79, 142, 247, 0.06);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0;
+            width: 3px; height: 100%;
+            background: linear-gradient(180deg, var(--accent), #7ab3ff);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card:hover::before { opacity: 1; }
+
+        .icon {
+            font-size: 2rem;
+            background: rgba(79, 142, 247, 0.08);
+            border: 1px solid rgba(79, 142, 247, 0.15);
+            width: 72px; height: 72px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 14px;
+            flex-shrink: 0;
+            transition: background 0.3s;
+        }
+
+        .feature-card:hover .icon {
+            background: rgba(79, 142, 247, 0.15);
+        }
+
+        .content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .content p {
+            color: var(--muted);
+            font-size: 0.97rem;
+        }
+
+        .tag-soon {
+            font-size: 0.6rem;
+            background: #1e3a5f;
+            color: #7ab3ff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            vertical-align: middle;
+            margin-left: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        /* ── Contact Section ── */
+        .contact-section {
+            border-top: 1px solid var(--border);
+            padding: 60px 20px;
+        }
+
+        .contact-inner {
+            max-width: 860px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-inner .section-title {
+            margin-bottom: 36px;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: border-color 0.25s, color 0.25s, box-shadow 0.25s, transform 0.2s;
+        }
+
+        .contact-item:hover {
+            border-color: var(--accent);
+            color: var(--accent2);
+            box-shadow: 0 0 20px rgba(79, 142, 247, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .contact-item i {
+            font-size: 1.1rem;
+            color: var(--accent);
+            transition: color 0.25s;
+        }
+
+        .contact-item:hover i { color: var(--accent2); }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 28px 20px 40px;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 600px) {
+            .feature-card { flex-direction: column; text-align: center; }
+            .feature-card::before { width: 100%; height: 3px; top: 0; left: 0; }
+            .contact-links { flex-direction: column; align-items: center; }
+            .contact-item { width: 100%; max-width: 320px; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="glow" id="glow"></div>
+
+    <!-- Hero -->
+    <header>
+        <div class="badge">Phần mềm toán học thế hệ mới</div>
+        <h1>TOANIX</h1>
+        <p class="hero-sub">Giải pháp tối ưu dành cho giáo viên và học sinh Trung học cơ sở trong việc biên soạn và luyện tập Toán học.</p>
+        <div class="scroll-arrow">↓</div>
+    </header>
+
+    <!-- Features -->
+    <div class="container">
+        <p class="section-label reveal">Tính năng</p>
+        <h2 class="section-title reveal">Được xây dựng cho lớp học hiện đại</h2>
+
+        <div class="feature-card reveal">
+            <div class="icon">✍️</div>
+            <div class="content">
+                <h3>Tạo câu hỏi</h3>
+                <p>Hệ thống hỗ trợ soạn thảo câu hỏi trắc nghiệm và tự luận thông minh, chuẩn cấu trúc chương trình THCS.</p>
+            </div>
+        </div>
+
+        <div class="feature-card reveal">
+            <div class="icon">👁️</div>
+            <div class="content">
+                <h3>Hiển thị trước</h3>
+                <p>Chế độ xem trước thời gian thực với KaTeX, giúp kiểm tra công thức toán học chính xác ngay khi soạn thảo.</p>
+            </div>
+        </div>
+
+        <div class="feature-card reveal">
+            <div class="icon">📄</div>
+            <div class="content">
+                <h3>Xuất LaTeX <span class="tag-soon">Coming soon</span></h3>
+                <p>Tính năng xuất file mã nguồn LaTeX để in ấn hoặc trình bày bài giảng chuyên nghiệp.</p>
+            </div>
+        </div>
+
+        <div class="feature-card reveal">
+            <div class="icon">🎮</div>
+            <div class="content">
+                <h3>Tạo QUIZ <span class="tag-soon">Coming soon</span></h3>
+                <p>Biến các bộ câu hỏi thành các bài kiểm tra tương tác sinh động, tăng hứng thú học tập.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact -->
+    <section class="contact-section">
+        <div class="contact-inner">
+            <p class="section-label reveal">Liên hệ</p>
+            <h2 class="section-title reveal">Kết nối với chúng tôi</h2>
+            <div class="contact-links reveal">
+                <a class="contact-item" href="mailto:lktin@outlook.com">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>lktin@outlook.com</span>
+                </a>
+                <a class="contact-item" href="https://www.facebook.com/lt.toanix" target="_blank" rel="noopener">
+                    <i class="fa-brands fa-facebook"></i>
+                    <span>facebook.com/lt.toanix</span>
+                </a>
+                <a class="contact-item" href="tel:+84395808431">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>+84 395 808 431</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 TOANIX Project. Thiết kế dành riêng cho Toán THCS.</p>
+    </footer>
+
+    <script>
+        // Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Glow follows cursor, centered via transform: translate(-50%, -50%)
+        const glow = document.getElementById('glow');
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top  = e.clientY + 'px';
+        });
+    </script>
+</body>
+</html>
