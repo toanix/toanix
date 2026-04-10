@@ -1,1 +1,12 @@
-
+[
+  {
+    "name": "TOANIX v0.1.0",
+    "description": "Bản phát hành TOANIX chính thức đầu tiên của LT.",
+    "source": "https://github.com/toanix/toanix/releases/download/v0.x.x-core/core.exe"
+  },
+  {
+    "name": "TOANIX v0.1.1",
+    "description": "Bản phát hành TOANIX chính thức thứ hai của LT.",
+    "source": "https://github.com/toanix/toanix/releases/download/v0.x.x-core/core.exe"
+  }
+]
