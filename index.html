@@ -220,6 +220,114 @@
             font-weight: 700;
         }
 
+        /* ── Quiz Section ── */
+        .quiz-section {
+            border-top: 1px solid var(--border);
+            padding: 80px 20px;
+        }
+
+        .quiz-inner {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .quiz-inner .section-title {
+            margin-bottom: 36px;
+        }
+
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 14px;
+        }
+
+        .quiz-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 22px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: border-color 0.25s, color 0.25s, box-shadow 0.25s, transform 0.2s, background 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-link::before {
+            content: '';
+            position: absolute; top: 0; left: 0;
+            width: 3px; height: 100%;
+            background: linear-gradient(180deg, var(--accent), #7ab3ff);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .quiz-link:hover::before { opacity: 1; }
+
+        .quiz-link:hover {
+            border-color: rgba(79, 142, 247, 0.45);
+            color: var(--accent2);
+            box-shadow: 0 0 22px rgba(79, 142, 247, 0.1);
+            transform: translateY(-2px);
+            background: rgba(79, 142, 247, 0.04);
+        }
+
+        .quiz-link .quiz-icon {
+            font-size: 1.3rem;
+            width: 38px; height: 38px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(79, 142, 247, 0.08);
+            border: 1px solid rgba(79, 142, 247, 0.15);
+            border-radius: 10px;
+            flex-shrink: 0;
+            transition: background 0.25s;
+        }
+
+        .quiz-link:hover .quiz-icon {
+            background: rgba(79, 142, 247, 0.16);
+        }
+
+        .quiz-link .quiz-label {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .quiz-label .quiz-name {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .quiz-label .quiz-slug {
+            color: var(--muted);
+            font-size: 0.78rem;
+            letter-spacing: 0.3px;
+        }
+
+        .quiz-link .arrow-icon {
+            margin-left: auto;
+            color: var(--accent);
+            font-size: 0.85rem;
+            opacity: 0;
+            transform: translateX(-4px);
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .quiz-link:hover .arrow-icon {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        @media (max-width: 600px) {
+            .quiz-grid { grid-template-columns: 1fr; }
+        }
+
         /* ── Contact Section ── */
         .contact-section {
             border-top: 1px solid var(--border);
@@ -337,6 +445,64 @@
             </div>
         </div>
     </div>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section">
+        <div class="quiz-inner">
+            <p class="section-label reveal">Luyện tập</p>
+            <h2 class="section-title reveal">Các QUIZ bài tập, rèn luyện cuối học kì II</h2>
+            <div class="quiz-grid reveal">
+                <a class="quiz-link" href="https://toanix.github.io/quiz-li" target="_blank" rel="noopener">
+                    <div class="quiz-icon">⚛️</div>
+                    <div class="quiz-label">
+                        <span class="quiz-name">Vật lí</span>
+                        <span class="quiz-slug">quiz-li</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-right arrow-icon"></i>
+                </a>
+                <a class="quiz-link" href="https://toanix.github.io/quiz-cn" target="_blank" rel="noopener">
+                    <div class="quiz-icon">🔧</div>
+                    <div class="quiz-label">
+                        <span class="quiz-name">Công nghệ</span>
+                        <span class="quiz-slug">quiz-cn</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-right arrow-icon"></i>
+                </a>
+                <a class="quiz-link" href="https://toanix.github.io/quiz-hoa" target="_blank" rel="noopener">
+                    <div class="quiz-icon">🧪</div>
+                    <div class="quiz-label">
+                        <span class="quiz-name">Hoá học</span>
+                        <span class="quiz-slug">quiz-hoa</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-right arrow-icon"></i>
+                </a>
+                <a class="quiz-link" href="https://toanix.github.io/quiz-sinh" target="_blank" rel="noopener">
+                    <div class="quiz-icon">🧬</div>
+                    <div class="quiz-label">
+                        <span class="quiz-name">Sinh học</span>
+                        <span class="quiz-slug">quiz-sinh</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-right arrow-icon"></i>
+                </a>
+                <a class="quiz-link" href="https://toanix.github.io/quiz-su" target="_blank" rel="noopener">
+                    <div class="quiz-icon">📜</div>
+                    <div class="quiz-label">
+                        <span class="quiz-name">Lịch sử</span>
+                        <span class="quiz-slug">quiz-su</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-right arrow-icon"></i>
+                </a>
+                <a class="quiz-link" href="https://toanix.github.io/quiz-english" target="_blank" rel="noopener">
+                    <div class="quiz-icon">🌐</div>
+                    <div class="quiz-label">
+                        <span class="quiz-name">Tiếng Anh</span>
+                        <span class="quiz-slug">quiz-english</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-right arrow-icon"></i>
+                </a>
+            </div>
+        </div>
+    </section>
 
     <!-- Contact -->
     <section class="contact-section">
